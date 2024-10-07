@@ -1,16 +1,22 @@
 import { defineConfig } from 'vite'
+import path from 'path'
 
 export default defineConfig({
+  root: path.join(__dirname, 'public'),
   build: {
-    outDir: 'static',
-    assetsDir: 'assets',
+    outDir: path.join(__dirname, 'public'),
+    emptyOutDir: false,
     rollupOptions: {
-      input: 'src/ts/main.ts',
-      output: {
-        entryFileNames: 'assets/js/[name].js',
-        chunkFileNames: 'assets/js/[name].js',
-        assetFileNames: 'assets/[ext]/[name].[ext]'
-      }
-    }
-  }
+      input: path.join(__dirname, 'src', 'main.ts'),
+    },
+  },
+  plugins: [
+    {
+      name: 'watch-external',
+      async buildStart() {
+        this.addWatchFile(path.join(__dirname, 'layouts'))
+        this.addWatchFile(path.join(__dirname, 'content'))
+      },
+    },
+  ],
 })

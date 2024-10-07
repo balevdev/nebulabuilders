@@ -1,6 +1,6 @@
 # Hugo default output directory
 /public
-
+/public/assets
 # Hugo cache directory
 /resources/_gen
 

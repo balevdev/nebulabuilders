@@ -5,12 +5,12 @@
     "description": "A static blog built with Hugo, HTMX, Tailwind CSS, and TypeScript",
     "scripts": {
         "dev": "concurrently \"hugo server --disableFastRender --poll 700ms\" \"vite\"",
-        "build": "vite build && hugo --gc --minify",
+        "build": "hugo --gc --minify && vite build",
         "preview": "hugo server --disableFastRender",
         "type-check": "tsc --noEmit",
         "lint": "eslint 'src/**/*.{js,ts}'",
         "format": "prettier --write 'src/**/*.{js,ts,css,md,json}'"
-    },
+      },
     "dependencies": {
         "@types/node": "^22.5.4",
         "fuse.js": "^7.0.0",
