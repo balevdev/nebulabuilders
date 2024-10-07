@@ -1,0 +1,64 @@
+baseURL = "https://yourdomain.com"
+languageCode = "en-us"
+title = "Nebula Builders"
+
+[params]
+  description ="Nebula Builders is an elite team of software engineers delivering cutting-edge insights and expert consulting in Cloud Computing, Software Architecture, and Design. We empower businesses to harness the full potential of cloud technologies, crafting robust, scalable solutions that drive innovation and operational excellence."
+  author = "Boyan Balev"
+  mermaid = true 
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "Blog"
+    url = "/posts"
+    weight = 2
+  [[menu.main]]
+    name = "About"
+    url = "/about"
+    weight = 3
+
+[markup]
+  [markup.highlight]
+    anchorLineNos = false
+    codeFences = true
+    guessSyntax = false
+    hl_Lines = ''
+    hl_inline = false
+    lineAnchors = ''
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    noHl = false
+    style = 'dracula'
+    tabWidth = 4
+  [markup.tableOfContents]
+    endLevel = 3
+    ordered = false
+    startLevel = 2
+  [markup.goldmark.renderer]
+    unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML"]
+  term = ["HTML"]
+
+[build]
+  writeStats = true
+
+[module]
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  [[module.mounts]]
+    source = "node_modules"
+    target = "assets/node_modules"

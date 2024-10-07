@@ -1,0 +1,20 @@
+- name: John Doe
+  position: Founder & CEO
+  bio: John is a tech enthusiast with over 15 years of experience in software development and entrepreneurship.
+  image: https://picsum.photos/200
+  twitter: https://twitter.com/johndoe
+  linkedin: https://www.linkedin.com/in/johndoe
+
+- name: Jane Smith
+  position: CTO
+  bio: Jane is a brilliant software architect with a passion for creating scalable and efficient systems.
+  image: https://picsum.photos/200
+  twitter: https://twitter.com/janesmith
+  linkedin: https://www.linkedin.com/in/janesmith
+
+- name: Mike Johnson
+  position: Lead Developer
+  bio: Mike is a full-stack developer with expertise in modern web technologies and cloud computing.
+  image: https://picsum.photos/200
+  twitter: https://twitter.com/mikejohnson
+  linkedin: https://www.linkedin.com/in/mikejohnson

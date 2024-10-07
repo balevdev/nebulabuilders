@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architectural Digest Episode I: Apache Kafka ❤ - Nebula Builders</title>
+    <meta name="description" content="Why Kafka?
+Apache Kafka has always been one of my favourite technologies up to date. So I&rsquo;m biased towards promoting it. That being said, the technology is a piece of art that can be used for everything under the sun from simple broker usage to large scale streaming solutions. Apache Kafka stands as a monumental innovation, offering unparalleled solutions to the challenges of data processing and streaming at scale. It was developed by Jay Kreps, Neha Narkhede, and Jun Rao at LinkedIn in 2010 and transcended its initial use case to become an elite platform for real-time data streaming, processing, and more.">
+    
+    <link rel="stylesheet" href="/css/main.min.8b154d9a8a40d066db1982d73390ed0ab275463533bf9a12edd654dcd11ad26d.css" integrity="sha256-ixVNmopA0GbbGYLXM5DtCrJ1RjUzv5oS7dZU3NEa0m0=">
+    <meta property="og:url" content="http://localhost:1313/posts/apache-kafka/">
+  <meta property="og:site_name" content="Nebula Builders">
+  <meta property="og:title" content="Architectural Digest Episode I: Apache Kafka ❤">
+  <meta property="og:description" content="Why Kafka? Apache Kafka has always been one of my favourite technologies up to date. So I’m biased towards promoting it. That being said, the technology is a piece of art that can be used for everything under the sun from simple broker usage to large scale streaming solutions. Apache Kafka stands as a monumental innovation, offering unparalleled solutions to the challenges of data processing and streaming at scale. It was developed by Jay Kreps, Neha Narkhede, and Jun Rao at LinkedIn in 2010 and transcended its initial use case to become an elite platform for real-time data streaming, processing, and more.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-03-12T09:00:00+00:00">
+    <meta property="article:modified_time" content="2024-03-12T09:00:00+00:00">
+    <meta property="article:tag" content="Apache Kafka">
+    <meta property="article:tag" content="Distributed Systems">
+    <meta property="article:tag" content="Data Streaming">
+    <meta property="article:tag" content="Software Architecture">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Architectural Digest Episode I: Apache Kafka ❤">
+  <meta name="twitter:description" content="Why Kafka? Apache Kafka has always been one of my favourite technologies up to date. So I’m biased towards promoting it. That being said, the technology is a piece of art that can be used for everything under the sun from simple broker usage to large scale streaming solutions. Apache Kafka stands as a monumental innovation, offering unparalleled solutions to the challenges of data processing and streaming at scale. It was developed by Jay Kreps, Neha Narkhede, and Jun Rao at LinkedIn in 2010 and transcended its initial use case to become an elite platform for real-time data streaming, processing, and more.">
+
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    
+    
+
+    
+</head>
+<body class="bg-gray-950 text-gray-200 min-h-screen flex flex-col">
+    <header class="bg-gray-950 shadow-md sticky top-0 z-50 relative">
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex items-center justify-center">
+            <nav class="hidden md:flex items-center space-x-8 ">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="50" height="50">
+                    <defs>
+                        <style>
+                            .logo-color {
+                                fill: none;
+                                stroke: #fff;
+                                stroke-width: 4;
+                            }
+
+                            .planet-surface {
+                                fill: none;
+                                stroke: #fff;
+                                stroke-width: 2;
+                            }
+                        </style>
+                    </defs>
+
+                    
+                    <circle cx="120" cy="70" r="50" class="logo-color" />
+
+                    
+                    <ellipse cx="120" cy="70" rx="85" ry="25" class="logo-color" />
+
+                    
+                    <path d="M80,55 Q100,40 120,55 Q140,70 160,55" class="planet-surface" />
+                    <path d="M80,85 Q100,100 120,85 Q140,70 160,85" class="planet-surface" />
+
+                    
+                    <circle cx="95" cy="60" r="3" fill="#fff" />
+                    <circle cx="145" cy="60" r="3" fill="#fff" />
+                    <circle cx="120" cy="85" r="3" fill="#fff" />
+                    <path d="M95,60 L120,85 L145,60" stroke="#fff" stroke-width="2" fill="none" />
+
+                    <path class="logo-color" d="M60,140 L120,180 L180,140 Z" />
+                    <path class="logo-color" d="M60,160 L120,200 L180,160 Z" />
+                    <path class="logo-color" d="M60,180 L120,220 L180,180 Z" />
+                </svg>
+                
+                
+                
+                <a href="/" class="nav-link group text-gray-300">
+                    <span class="group-hover:text-violet-400 transition duration-300 text-lg">Home</span>
+                    <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-violet-400"></span>
+                </a>
+                
+                <a href="/posts" class="nav-link group text-gray-300">
+                    <span class="group-hover:text-violet-400 transition duration-300 text-lg">Blog</span>
+                    <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-violet-400"></span>
+                </a>
+                
+                <a href="/about" class="nav-link group text-gray-300">
+                    <span class="group-hover:text-violet-400 transition duration-300 text-lg">About</span>
+                    <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-violet-400"></span>
+                </a>
+                
+            </nav>
+
+            <button id="mobile-menu-toggle" class="md:hidden text-gray-300 absolute top-4 right-4" aria-label="Toggle mobile menu">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="md:hidden hidden bg-gray-800">
+        
+        <a href="/" class="block px-4 py-2 text-center text-gray-300 hover:bg-gray-700 hover:text-violet-400 transition duration-300 text-lg">Home</a>
+        
+        <a href="/posts" class="block px-4 py-2 text-center text-gray-300 hover:bg-gray-700 hover:text-violet-400 transition duration-300 text-lg">Blog</a>
+        
+        <a href="/about" class="block px-4 py-2 text-center text-gray-300 hover:bg-gray-700 hover:text-violet-400 transition duration-300 text-lg">About</a>
+        
+    </div>
+
+    
+    <div class="absolute bottom-0 left-0 right-0 h-px bg-white glow-line"></div>
+</header>
+
+<style>
+    @keyframes neon-glow {
+        0% {
+            text-shadow: 0 0 10px #a78bfa, 0 0 20px #a78bfa, 0 0 30px #a78bfa, 0 0 40px #a78bfa;
+        }
+        100% {
+            text-shadow: 0 0 20px #a78bfa, 0 0 30px #a78bfa, 0 0 40px #a78bfa, 0 0 50px #a78bfa, 0 0 60px #a78bfa;
+        }
+    }
+
+    .nav-link:hover span:first-child {
+        animation: neon-glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @media (max-width: 768px) {
+        .nav-link:hover span:first-child {
+            animation: none;
+        }
+    }
+
+     
+    .glow-line {
+        box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff;
+        animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+        from {
+            box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff;
+        }
+        to {
+            box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff;
+        }
+    }
+</style>
+    <main class="flex-grow">
+        
+<article class="bg-gray-950 text-gray-200 min-h-screen">
+    <div class="container mx-auto px-4 py-16">
+        <header class="mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Architectural Digest Episode I: Apache Kafka ❤</h1>
+            
+            <time class="text-violet-400">March 12, 2024</time>
+            
+        </header>
+
+        
+
+        <div class="prose prose-lg prose-invert max-w-none">
+            <h2 id="why-kafka">Why Kafka?</h2>
+<p>Apache Kafka has always been one of my favourite technologies up to date. So I&rsquo;m biased towards promoting it. That being said, the technology is a piece of art that can be used for everything under the sun from simple broker usage to large scale streaming solutions. Apache Kafka stands as a monumental innovation, offering unparalleled solutions to the challenges of data processing and streaming at scale. It was developed by Jay Kreps, Neha Narkhede, and Jun Rao at LinkedIn in 2010 and transcended its initial use case to become an elite platform for real-time data streaming, processing, and more.</p>
+<h2 id="the-start-and-evolution-of-apache-kafka">The Start and Evolution of Apache Kafka</h2>
+<p>Apache Kafka was conceived out of necessity, born from LinkedIn&rsquo;s critical need to manage massive volumes of data with higher efficiency and reliability than traditional messaging systems allowed. It was designed to overcome the limitations of existing systems in scalability, data retention, and fault tolerance, which were pivotal for LinkedIn&rsquo;s burgeoning data processing requirements.</p>
+<p>-<strong>Year of Creation</strong>: 2010</p>
+<ul>
+<li><strong>Creators</strong>: Jay Kreps, Neha Narkhede, Jun Rao</li>
+<li><strong>Primary Goal</strong>: To build a distributed system capable of handling high volumes of data writes and reads, with built-in fault tolerance and scalability.</li>
+</ul>
+<h2 id="kafka-architecture---core-components-kotlin-_-examples">Kafka Architecture - Core components (Kotlin ^_^ Examples)</h2>
+<p><img src="https://kafka.apache.org/images/kafka-apis.png" alt="Kafka Architecture">
+<em>Image Credit: <a href="https://kafka.apache.org/">https://kafka.apache.org/</a></em></p>
+<h3 id="producer-api">Producer API</h3>
+<p>Allows applications to send streams of data to topics in the Kafka cluster.</p>
+<pre tabindex="0"><code>+-----------------+      +-----------------+      +---------+
+|      Application | ---- | Producer Library | ---- | Kafka   |
++-----------------+      +-----------------+      +---------+
+                          ^ (Message)
+                          |
+</code></pre><p>Example: A web application receives real-time user activity data (clicks, purchases) and uses the Producer API to send this data to a Kafka topic named &ldquo;user_activity&rdquo;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.kafka.core.KafkaTemplate
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.kafka.support.SendResult
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.stereotype.Service
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.util.concurrent.ListenableFuture
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.util.concurrent.ListenableFutureCallback
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@Service
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ProducerService</span>(<span style="color:#ff79c6">private</span> <span style="color:#ff79c6">val</span> kafkaTemplate: KafkaTemplate&lt;String, String&gt;) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">sendMessage</span>(topic: String, key: String, message: String) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">val</span> future: ListenableFuture&lt;SendResult&lt;String, String&gt;&gt; = kafkaTemplate.send(topic, key, message)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        future.addCallback(<span style="color:#ff79c6">object</span> : <span style="color:#50fa7b">ListenableFutureCallback</span>&lt;SendResult&lt;String, String&gt;&gt; {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">onSuccess</span>(result: SendResult&lt;String, String&gt;?) {
+</span></span><span style="display:flex;"><span>                println(<span style="color:#f1fa8c">&#34;Sent message=[</span><span style="color:#f1fa8c">$message</span><span style="color:#f1fa8c">] with offset=[</span><span style="color:#f1fa8c">${result?.recordMetadata?.offset()}</span><span style="color:#f1fa8c">]&#34;</span>)
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">onFailure</span>(ex: Throwable) {
+</span></span><span style="display:flex;"><span>                println(<span style="color:#f1fa8c">&#34;Unable to send message=[</span><span style="color:#f1fa8c">$message</span><span style="color:#f1fa8c">] due to : </span><span style="color:#f1fa8c">${ex.message}</span><span style="color:#f1fa8c">&#34;</span>)
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        })
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Explanation</strong>: This is useful for decoupling the application from downstream processing. The application sends data without worrying about who consumes it or when. Kafka buffers the data, ensuring reliable delivery even if consumers are temporarily unavailable.</p>
+<h3 id="consumer-api">Consumer API</h3>
+<p>Enables applications to read streams of data from topics.</p>
+<pre tabindex="0"><code>+-----------------+      +-----------------+      +---------+
+|      Application | ---- | Consumer Library | ---- | Kafka   |
++-----------------+      +-----------------+      +---------+
+                                         ^ (Message)
+                                         |
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.kafka.annotation.KafkaListener
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.kafka.support.KafkaHeaders
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.messaging.handler.annotation.Header
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.stereotype.Service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@Service
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ConsumerService</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @KafkaListener(topics = [<span style="color:#f1fa8c">&#34;user_activity&#34;</span>], groupId = <span style="color:#f1fa8c">&#34;test-group&#34;</span>, concurrency = <span style="color:#f1fa8c">&#34;3&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">listen</span>(
+</span></span><span style="display:flex;"><span>        message: String,
+</span></span><span style="display:flex;"><span>        @Header(<span style="color:#50fa7b">KafkaHeaders</span>.RECEIVED_PARTITION_ID) partition: Int,
+</span></span><span style="display:flex;"><span>        @Header(<span style="color:#50fa7b">KafkaHeaders</span>.OFFSET) offset: Long
+</span></span><span style="display:flex;"><span>    ) {
+</span></span><span style="display:flex;"><span>        println(<span style="color:#f1fa8c">&#34;Received message: </span><span style="color:#f1fa8c">$message</span><span style="color:#f1fa8c"> from partition: </span><span style="color:#f1fa8c">$partition</span><span style="color:#f1fa8c"> at offset: </span><span style="color:#f1fa8c">$offset</span><span style="color:#f1fa8c">&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @KafkaListener(topics = [<span style="color:#f1fa8c">&#34;user_activity&#34;</span>], groupId = <span style="color:#f1fa8c">&#34;test-group-errors&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">errorListener</span>(message: String) {
+</span></span><span style="display:flex;"><span>        println(<span style="color:#f1fa8c">&#34;Handling error for message: </span><span style="color:#f1fa8c">$message</span><span style="color:#f1fa8c">&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">/// HANDLE ERROR HERE 
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Example: A fraud detection system subscribes to the &ldquo;user_activity&rdquo; topic using the Consumer API. It reads incoming messages (user activity data) and analyzes them for suspicious patterns that might indicate fraudulent transactions.</p>
+<p><strong>Explanation</strong>: This is beneficial for real-time processing of data streams. The consumer application can react to incoming events as they occur, enabling immediate actions like fraud detection or triggering alerts.</p>
+<h3 id="streams-api">Streams API</h3>
+<p>Facilitates the building of applications that process input streams and produce output streams.</p>
+<pre tabindex="0"><code>+-----------------+      +-----------------+      +---------+      +-----------------+
+|      Application | ---- | Streams Library  | ---- | Kafka   | ---- |  Another Topic  |
++-----------------+      +-----------------+      +---------+      +-----------------+
+                          ^ (Message)                             ^ (Processed Message)
+                          |                                         |
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.apache.kafka.common.serialization.Serdes
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.apache.kafka.streams.KafkaStreams
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.apache.kafka.streams.StreamsBuilder
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.apache.kafka.streams.kstream.KStream
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.apache.kafka.streams.kstream.Produced
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.apache.kafka.streams.state.Stores
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.context.annotation.Bean
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.context.annotation.Configuration
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.kafka.annotation.EnableKafkaStreams
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@Configuration
+</span></span><span style="display:flex;"><span>@EnableKafkaStreams
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">StreamsConfig</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Bean
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">kStream</span>(builder: StreamsBuilder): KStream&lt;String, String&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">val</span> kStream: KStream&lt;String, String&gt; = builder.stream(<span style="color:#f1fa8c">&#34;user_activity&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">val</span> purchaseStream = kStream.filter { _, <span style="color:#ff79c6">value</span> <span style="color:#ff79c6">-&gt;</span> <span style="color:#ff79c6">value</span>.contains(<span style="color:#f1fa8c">&#34;purchase&#34;</span>) }
+</span></span><span style="display:flex;"><span>        purchaseStream.to(<span style="color:#f1fa8c">&#34;purchased_items&#34;</span>, <span style="color:#50fa7b">Produced</span>.with(<span style="color:#50fa7b">Serdes</span>.String(), <span style="color:#50fa7b">Serdes</span>.String()))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// Branching
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">val</span> branches = purchaseStream.branch(
+</span></span><span style="display:flex;"><span>            { _, <span style="color:#ff79c6">value</span> <span style="color:#ff79c6">-&gt;</span> <span style="color:#ff79c6">value</span>.contains(<span style="color:#f1fa8c">&#34;high-value&#34;</span>) },
+</span></span><span style="display:flex;"><span>            { _, _ <span style="color:#ff79c6">-&gt;</span> <span style="color:#ff79c6">true</span> }
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        branches[<span style="color:#bd93f9">0</span>].to(<span style="color:#f1fa8c">&#34;high-value-purchases&#34;</span>)
+</span></span><span style="display:flex;"><span>        branches[<span style="color:#bd93f9">1</span>].to(<span style="color:#f1fa8c">&#34;regular-purchases&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// State store 
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">val</span> storeBuilder = <span style="color:#50fa7b">Stores</span>.keyValueStoreBuilder(
+</span></span><span style="display:flex;"><span>            <span style="color:#50fa7b">Stores</span>.persistentKeyValueStore(<span style="color:#f1fa8c">&#34;purchase-counts&#34;</span>),
+</span></span><span style="display:flex;"><span>            <span style="color:#50fa7b">Serdes</span>.String(),
+</span></span><span style="display:flex;"><span>            <span style="color:#50fa7b">Serdes</span>.Long()
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        builder.addStateStore(storeBuilder)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> kStream
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We used KSQL principles: The platform can leverage KSQL, a stream processing SQL engine built on top of Kafka. KSQL allows you to write SQL-like queries to process and analyze data streams. Here&rsquo;s an example KSQL query achieving similar functionality:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff79c6">CREATE</span> STREAM user_activity (
+</span></span><span style="display:flex;"><span>  user_id <span style="color:#8be9fd;font-style:italic">INT</span>,
+</span></span><span style="display:flex;"><span>  item_id <span style="color:#8be9fd;font-style:italic">INT</span>,
+</span></span><span style="display:flex;"><span>  action STRING
+</span></span><span style="display:flex;"><span>) <span style="color:#ff79c6">WITH</span> (KAFKA_TOPIC<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;user_activity_topic&#39;</span>, VALUE_FORMAT <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;JSON&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">CREATE</span> STREAM targeted_promotions (
+</span></span><span style="display:flex;"><span>  user_id <span style="color:#8be9fd;font-style:italic">INT</span>,
+</span></span><span style="display:flex;"><span>  promotion_id <span style="color:#8be9fd;font-style:italic">INT</span>
+</span></span><span style="display:flex;"><span>) <span style="color:#ff79c6">WITH</span> (KAFKA_TOPIC<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;targeted_promotions_topic&#39;</span>, VALUE_FORMAT <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;JSON&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">CREATE</span> STREAM purchased_items <span style="color:#ff79c6">AS</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">SELECT</span> user_id,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">CASE</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">WHEN</span> action <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;purchase&#39;</span> <span style="color:#ff79c6">THEN</span> item_id
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">ELSE</span> <span style="color:#ff79c6">NULL</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">END</span> <span style="color:#ff79c6">AS</span> purchased_item
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">FROM</span> user_activity
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">WHERE</span> action <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;purchase&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">GROUP</span> <span style="color:#ff79c6">BY</span> user_id
+</span></span><span style="display:flex;"><span>EMIT CHANGES;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">CREATE</span> STREAM promotions_stream <span style="color:#ff79c6">AS</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">SELECT</span> user_id,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">CASE</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">WHEN</span> purchased_item <span style="color:#ff79c6">IN</span> (<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>) <span style="color:#ff79c6">THEN</span> <span style="color:#bd93f9">1</span>  <span style="color:#6272a4">-- Promotion for specific items
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">ELSE</span> <span style="color:#bd93f9">2</span>  <span style="color:#6272a4">-- Default promotion
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>  <span style="color:#ff79c6">END</span> <span style="color:#ff79c6">AS</span> promotion_id
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">FROM</span> purchased_items
+</span></span><span style="display:flex;"><span>EMIT CHANGES;
+</span></span></code></pre></div><p>Example: A marketing automation platform subscribes to the &ldquo;user_activity&rdquo; topic and utilizes a Streams API library. It processes the user activity data in real-time to identify user segments and send targeted marketing messages to a new topic named &ldquo;targeted_promotions.&rdquo;</p>
+<p><strong>Explanation</strong>: The Streams API is valuable for building applications that transform and enrich data streams. It allows you to perform complex operations on incoming data and potentially generate new data streams for further processing or consumption by other applications.</p>
+<h3 id="connect-api">Connect API</h3>
+<p>Supports reliable, scalable, and easy integration of Kafka with existing applications or data systems like databases and such.</p>
+<pre tabindex="0"><code>+-----------------+      +-----------------+      +---------+      +-----------------+
+| External System | ---- | Kafka Connect  | ---- | Kafka   |      |  Application  |
++-----------------+      +-----------------+      +---------+      +-----------------+
+                          ^ (Data)                           ^ (Message)
+                          |                                         |
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.beans.factory.annotation.Autowired
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.stereotype.Service
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.web.client.RestTemplate
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@Service
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ConnectService</span>(@Autowired <span style="color:#ff79c6">private</span> <span style="color:#ff79c6">val</span> restTemplate: RestTemplate) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">createConnector</span>(connectorConfig: String) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">val</span> connectUrl = <span style="color:#f1fa8c">&#34;http://localhost:8083/connectors&#34;</span>
+</span></span><span style="display:flex;"><span>        restTemplate.postForLocation(connectUrl, connectorConfig)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Example: An e-commerce platform uses Kafka Connect to integrate with its legacy order management system. Kafka Connect reads order data from the system, converts it into Kafka messages, and sends it to a topic named &ldquo;orders.&rdquo; An application then subscribes to this topic and processes the orders for fulfilment.</p>
+<p><strong>Explanation</strong>: The Connect API simplifies integration with various data sources. It acts as a bridge, allowing you to seamlessly connect Kafka with external systems and databases, making data readily available for real-time processing and analysis within the Kafka ecosystem.</p>
+<h2 id="key-features-and-technologies">Key Features and Technologies</h2>
+<ul>
+<li><strong>Distributed System Design</strong>: Kafka runs as a cluster on one or more servers, supporting partitioning, replication, and fault tolerance.</li>
+<li><strong>Partitioning</strong>: Splits data across multiple nodes, allowing for parallel processing and enhancing scalability and throughput.</li>
+<li><strong>Replication</strong>: Ensures fault tolerance by duplicating data across multiple nodes, safeguarding against data loss.</li>
+<li><strong>Option 1 Cluster Management Recommended (Kraft)</strong>: Leverages Apache Kafka&rsquo;s built-in KRaft protocol for managing cluster metadata, including nodes, topics, and partitions. More efficient than Zookeeper option.</li>
+<li><strong>Option 2 Cluster Management Legacy (ZooKeeper Integration)</strong>: Utilizes Apache ZooKeeper for cluster management, maintaining metadata about nodes, topics, and partitions.</li>
+</ul>
+<p><img src="https://www.confluent.io/wp-content/uploads/kraft-arch-1024x673.png" alt="Kafka Cluster Management">
+<em>Image Credit: <a href="https://www.confluent.io/">https://www.confluent.io/</a></em></p>
+<h2 id="advanced-kafka-capabilities">Advanced Kafka Capabilities</h2>
+<p>Beyond its basic architecture, Kafka incorporates advanced features that fortify its position as a critical tool for data-intensive applications.</p>
+<p><strong>Challenge Addressed</strong>: Prevents data duplication and loss during processing, ensuring each record is processed exactly once, despite failures.</p>
+<p><strong>Implementation</strong>: Combines idempotence and transactional writes across multiple partitions and topics.</p>
+<h2 id="kafkas-impact-on-data-driven-technologies">Kafka&rsquo;s Impact on Data-Driven Technologies</h2>
+<p>Apache Kafka&rsquo;s design and capabilities have made it a linchpin in modern data architectures, supporting a wide array of applications:</p>
+<ul>
+<li><strong>Real-Time Analytics</strong>: Powers analytical systems that require low-latency processing of large data streams.</li>
+<li><strong>Event Sourcing</strong>: Facilitates the storage of changes to the application state as a sequence of events.</li>
+<li><strong>Log Aggregation</strong>: Collects and processes log and event data from multiple sources.</li>
+<li><strong>Stream Processing</strong>: Enables complex processing jobs that involve filtering, aggregating, and transforming data streams.</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>Apache Kafka represents a paradigm shift in how data is ingested, processed, and analyzed in real-time across distributed systems. Its architectural ingenuity, coupled with a comprehensive suite of APIs and features, addresses the critical needs of scalability, reliability, and fault tolerance. As data continues to grow in importance and scale, Kafka&rsquo;s role in enabling efficient, real-time data processing will undoubtedly expand, further cementing its status as an essential component of the technological ecosystem.</p>
+
+        </div>
+
+        <footer class="mt-12 pt-8 border-t border-gray-800">
+            
+            <div class="mb-4">
+                <h4 class="text-lg font-semibold text-white mb-2">Tags:</h4>
+                <div class="flex flex-wrap gap-2">
+                    
+                    <a href="/tags/apache-kafka" class="bg-gray-800 text-violet-400 px-3 py-1 rounded-full text-sm hover:bg-violet-600 hover:text-white transition duration-300">
+                        Apache Kafka
+                    </a>
+                    
+                    <a href="/tags/distributed-systems" class="bg-gray-800 text-violet-400 px-3 py-1 rounded-full text-sm hover:bg-violet-600 hover:text-white transition duration-300">
+                        Distributed Systems
+                    </a>
+                    
+                    <a href="/tags/data-streaming" class="bg-gray-800 text-violet-400 px-3 py-1 rounded-full text-sm hover:bg-violet-600 hover:text-white transition duration-300">
+                        Data Streaming
+                    </a>
+                    
+                    <a href="/tags/software-architecture" class="bg-gray-800 text-violet-400 px-3 py-1 rounded-full text-sm hover:bg-violet-600 hover:text-white transition duration-300">
+                        Software Architecture
+                    </a>
+                    
+                </div>
+            </div>
+            
+
+            <div class="flex justify-between items-center">
+                
+                <a href="http://localhost:1313/posts/kubernetes-101/" class="text-violet-400 hover:text-white transition duration-300">
+                    &larr; Previous: Kubernetes 101: Intro to the Best Orchestrator in the World
+                </a>
+                
+                
+            </div>
+        </footer>
+    </div>
+</article>
+
+    </main>
+    <footer class="bg-gray-900 text-gray-300 py-8">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap justify-between items-center">
+            <div class="w-full md:w-1/3 mb-6 md:mb-0">
+                <h3 class="text-xl font-bold mb-2">Nebula Builders</h3>
+                <p class="text-sm">Nebula Builders is an elite team of software engineers delivering cutting-edge insights and expert consulting in Cloud Computing, Software Architecture, and Design. We empower businesses to harness the full potential of cloud technologies, crafting robust, scalable solutions that drive innovation and operational excellence.</p>
+            </div>
+            <div class="w-full md:w-1/3 mb-6 md:mb-0">
+                <h4 class="text-lg font-semibold mb-2">Quick Links</h4>
+                <ul>
+                    
+                    <li><a href="/" class="hover:text-violet-400 transition duration-300">Home</a></li>
+                    
+                    <li><a href="/posts" class="hover:text-violet-400 transition duration-300">Blog</a></li>
+                    
+                    <li><a href="/about" class="hover:text-violet-400 transition duration-300">About</a></li>
+                    
+                </ul>
+            </div>
+            <div class="w-full md:w-1/3">
+                <h4 class="text-lg font-semibold mb-2">Connect</h4>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-violet-400 transition duration-300">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-violet-400 transition duration-300">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-violet-400 transition duration-300">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="mt-8 text-center text-sm">
+            <p>&copy; 2024 Nebula Builders. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+    <button id="scroll-to-top" class="fixed bottom-4 right-4 bg-primary text-white p-2 rounded-full shadow-lg hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+</body>
+</html>

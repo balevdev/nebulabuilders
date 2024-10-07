@@ -1,0 +1,43 @@
+{{ define "main" }}
+<div class="bg-gray-950 text-gray-200 min-h-screen">
+    <div class="container mx-auto px-4 py-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-8">About Nebula Builders</h1>
+
+        <div class="prose prose-lg prose-invert max-w-none mb-12">
+            {{ .Content }}
+        </div>
+
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold text-violet-400 mb-8">Our Team</h2>
+            <div class="space-y-12">
+                {{ partial "team-member-card.html" (dict 
+                    "name" "Boyan Balev" 
+                    "role" "Backend, Cloud & Software Architecture Specialist" 
+                    "bio" "With extensive experience in backend development, cloud technologies, and software architecture, Boyan brings robust and scalable solutions to life. He's passionate about optimizing systems and implementing cutting-edge technologies to solve complex problems." 
+                    "image" "https://picsum.photos/seed/boyan/200/200" 
+                    "twitter" "https://twitter.com/boyanbalev" 
+                    "linkedin" "https://www.linkedin.com/in/boyanbalev"
+                ) }}
+
+                {{ partial "team-member-card.html" (dict 
+                    "name" "Dummy Dumov" 
+                    "role" "UX/UI Design Lead" 
+                    "bio" "Deyan is our creative force, bringing user-centered design principles to every project. With a keen eye for aesthetics and a deep understanding of user behavior, Deyan crafts intuitive and visually appealing interfaces that enhance user experiences." 
+                    "image" "https://picsum.photos/seed/Deyan/200/200" 
+                    "twitter" "#" 
+                    "linkedin" "#"
+                ) }}
+
+                {{ partial "team-member-card.html" (dict 
+                    "name" "Sam Taylor" 
+                    "role" "Frontend Development" 
+                    "bio" "Sam is our frontend maestro, turning designs into responsive, performant, and accessible web applications. With expertise in modern JavaScript frameworks and a passion for clean code, Sam ensures our projects are not just functional, but delightful to use." 
+                    "image" "https://picsum.photos/seed/sam/200/200" 
+                    "twitter" "#" 
+                    "linkedin" "#"
+                ) }}
+            </div>
+        </section>
+    </div>
+</div>
+{{ end }}

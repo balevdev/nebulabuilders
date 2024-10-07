@@ -1,0 +1,78 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+
+@layer base {
+  body {
+    @apply bg-gray-950 text-gray-200;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-block bg-violet-600 text-white px-6 py-2 rounded-md hover:bg-violet-700 transition duration-300 shadow-lg hover:shadow-xl;
+  }
+}
+
+@layer utilities {
+  .prose-invert {
+    @apply prose-headings:text-white prose-a:text-violet-400 prose-strong:text-white prose-code:text-violet-300 prose-pre:bg-gray-800;
+  }
+}
+
+
+/* Add this to your custom CSS file or in a <style> tag in your HTML */
+
+.team-member-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #8B5CF6, #6D28D9);
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+.team-member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(139, 92, 246, 0.2);
+}
+
+.team-member-card:hover::before {
+    transform: translateY(0);
+}
+
+.bio-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.team-member-image {
+    transition: transform 0.3s ease;
+}
+
+.team-member-card:hover .team-member-image {
+    transform: scale(1.05);
+}
+
+.social-icons {
+    transition: opacity 0.3s ease;
+    opacity: 0.7;
+}
+
+.team-member-card:hover .social-icons {
+    opacity: 1;
+}

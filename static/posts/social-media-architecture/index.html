@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Social Media Platform Architecture: Microservices, Data Flow, and Infrastructure (Version 1) - Nebula Builders</title>
+    <meta name="description" content="Introduction
+In the rapidly evolving landscape of social media platforms, building a scalable, resilient, and performant architecture is paramount. This article presents an in-depth overview of a modern social media platform architecture, focusing on how microservices interact, how data flows through the system, and how the underlying infrastructure supports millions of users while maintaining responsiveness, data integrity, and cost-effectiveness.
+We&rsquo;ll explore the rationale behind our technical decisions, diving deep into the interplay between different components and how they contribute to a robust, scalable system. Additionally, we&rsquo;ll discuss the high-level infrastructure that supports this architecture, providing insights into how the system operates at scale.">
+    
+    <link rel="stylesheet" href="/css/main.min.8b154d9a8a40d066db1982d73390ed0ab275463533bf9a12edd654dcd11ad26d.css" integrity="sha256-ixVNmopA0GbbGYLXM5DtCrJ1RjUzv5oS7dZU3NEa0m0=">
+    <meta property="og:url" content="http://localhost:1313/posts/social-media-architecture/">
+  <meta property="og:site_name" content="Nebula Builders">
+  <meta property="og:title" content="Comprehensive Social Media Platform Architecture: Microservices, Data Flow, and Infrastructure (Version 1)">
+  <meta property="og:description" content="Introduction In the rapidly evolving landscape of social media platforms, building a scalable, resilient, and performant architecture is paramount. This article presents an in-depth overview of a modern social media platform architecture, focusing on how microservices interact, how data flows through the system, and how the underlying infrastructure supports millions of users while maintaining responsiveness, data integrity, and cost-effectiveness.
+We’ll explore the rationale behind our technical decisions, diving deep into the interplay between different components and how they contribute to a robust, scalable system. Additionally, we’ll discuss the high-level infrastructure that supports this architecture, providing insights into how the system operates at scale.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-09-11T12:00:00+00:00">
+    <meta property="article:modified_time" content="2023-09-11T12:00:00+00:00">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Comprehensive Social Media Platform Architecture: Microservices, Data Flow, and Infrastructure (Version 1)">
+  <meta name="twitter:description" content="Introduction In the rapidly evolving landscape of social media platforms, building a scalable, resilient, and performant architecture is paramount. This article presents an in-depth overview of a modern social media platform architecture, focusing on how microservices interact, how data flows through the system, and how the underlying infrastructure supports millions of users while maintaining responsiveness, data integrity, and cost-effectiveness.
+We’ll explore the rationale behind our technical decisions, diving deep into the interplay between different components and how they contribute to a robust, scalable system. Additionally, we’ll discuss the high-level infrastructure that supports this architecture, providing insights into how the system operates at scale.">
+
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    
+</head>
+<body class="bg-gray-950 text-gray-200 min-h-screen flex flex-col">
+    <header class="bg-gray-950 shadow-md sticky top-0 z-50 relative">
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex items-center justify-center">
+            <nav class="hidden md:flex items-center space-x-8 ">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="50" height="50">
+                    <defs>
+                        <style>
+                            .logo-color {
+                                fill: none;
+                                stroke: #fff;
+                                stroke-width: 4;
+                            }
+
+                            .planet-surface {
+                                fill: none;
+                                stroke: #fff;
+                                stroke-width: 2;
+                            }
+                        </style>
+                    </defs>
+
+                    
+                    <circle cx="120" cy="70" r="50" class="logo-color" />
+
+                    
+                    <ellipse cx="120" cy="70" rx="85" ry="25" class="logo-color" />
+
+                    
+                    <path d="M80,55 Q100,40 120,55 Q140,70 160,55" class="planet-surface" />
+                    <path d="M80,85 Q100,100 120,85 Q140,70 160,85" class="planet-surface" />
+
+                    
+                    <circle cx="95" cy="60" r="3" fill="#fff" />
+                    <circle cx="145" cy="60" r="3" fill="#fff" />
+                    <circle cx="120" cy="85" r="3" fill="#fff" />
+                    <path d="M95,60 L120,85 L145,60" stroke="#fff" stroke-width="2" fill="none" />
+
+                    <path class="logo-color" d="M60,140 L120,180 L180,140 Z" />
+                    <path class="logo-color" d="M60,160 L120,200 L180,160 Z" />
+                    <path class="logo-color" d="M60,180 L120,220 L180,180 Z" />
+                </svg>
+                
+                
+                
+                <a href="/" class="nav-link group text-gray-300">
+                    <span class="group-hover:text-violet-400 transition duration-300 text-lg">Home</span>
+                    <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-violet-400"></span>
+                </a>
+                
+                <a href="/posts" class="nav-link group text-gray-300">
+                    <span class="group-hover:text-violet-400 transition duration-300 text-lg">Blog</span>
+                    <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-violet-400"></span>
+                </a>
+                
+                <a href="/about" class="nav-link group text-gray-300">
+                    <span class="group-hover:text-violet-400 transition duration-300 text-lg">About</span>
+                    <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-violet-400"></span>
+                </a>
+                
+            </nav>
+
+            <button id="mobile-menu-toggle" class="md:hidden text-gray-300 absolute top-4 right-4" aria-label="Toggle mobile menu">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="md:hidden hidden bg-gray-800">
+        
+        <a href="/" class="block px-4 py-2 text-center text-gray-300 hover:bg-gray-700 hover:text-violet-400 transition duration-300 text-lg">Home</a>
+        
+        <a href="/posts" class="block px-4 py-2 text-center text-gray-300 hover:bg-gray-700 hover:text-violet-400 transition duration-300 text-lg">Blog</a>
+        
+        <a href="/about" class="block px-4 py-2 text-center text-gray-300 hover:bg-gray-700 hover:text-violet-400 transition duration-300 text-lg">About</a>
+        
+    </div>
+
+    
+    <div class="absolute bottom-0 left-0 right-0 h-px bg-white glow-line"></div>
+</header>
+
+<style>
+    @keyframes neon-glow {
+        0% {
+            text-shadow: 0 0 10px #a78bfa, 0 0 20px #a78bfa, 0 0 30px #a78bfa, 0 0 40px #a78bfa;
+        }
+        100% {
+            text-shadow: 0 0 20px #a78bfa, 0 0 30px #a78bfa, 0 0 40px #a78bfa, 0 0 50px #a78bfa, 0 0 60px #a78bfa;
+        }
+    }
+
+    .nav-link:hover span:first-child {
+        animation: neon-glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @media (max-width: 768px) {
+        .nav-link:hover span:first-child {
+            animation: none;
+        }
+    }
+
+     
+    .glow-line {
+        box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff;
+        animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+        from {
+            box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff;
+        }
+        to {
+            box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff;
+        }
+    }
+</style>
+    <main class="flex-grow">
+        
+<article class="bg-gray-950 text-gray-200 min-h-screen">
+    <div class="container mx-auto px-4 py-16">
+        <header class="mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Comprehensive Social Media Platform Architecture: Microservices, Data Flow, and Infrastructure (Version 1)</h1>
+            
+            <time class="text-violet-400">September 11, 2023</time>
+            
+        </header>
+
+        
+
+        <div class="prose prose-lg prose-invert max-w-none">
+            <h2 id="introduction">Introduction</h2>
+<p>In the rapidly evolving landscape of social media platforms, building a scalable, resilient, and performant architecture is paramount. This article presents an in-depth overview of a modern social media platform architecture, focusing on how microservices interact, how data flows through the system, and how the underlying infrastructure supports millions of users while maintaining responsiveness, data integrity, and cost-effectiveness.</p>
+<p>We&rsquo;ll explore the rationale behind our technical decisions, diving deep into the interplay between different components and how they contribute to a robust, scalable system. Additionally, we&rsquo;ll discuss the high-level infrastructure that supports this architecture, providing insights into how the system operates at scale.</p>
+<h2 id="system-overview-and-infrastructure">System Overview and Infrastructure</h2>
+<p>At its core, our social media platform is built on a microservices architecture, leveraging Kubernetes as the orchestration platform. This approach allows for independent scaling and deployment of services, improving overall system resilience and development velocity.</p>
+<p>{{&lt; mermaid &gt;}}
+graph TD
+A[Client Applications] &ndash;&gt; B[Global CDN]
+B &ndash;&gt; C[Load Balancer]
+C &ndash;&gt; D[API Gateway]
+D &ndash;&gt; E[Service Mesh]
+E &ndash;&gt; F[Microservices Cluster]
+F &ndash;&gt; G[Data Layer]
+H[Confluent Kafka] &ndash;&gt; F
+I[Monitoring &amp; Logging] &ndash;&gt; F
+J[CI/CD Pipeline] &ndash;&gt; F
+K[Identity Provider] &ndash;&gt; D</p>
+<pre><code>subgraph Microservices Cluster
+L[Authentication Service]
+M[User Service]
+N[Post Service]
+O[Feed Service]
+P[Messaging Service]
+Q[Notification Service]
+R[Search Service]
+S[Analytics Service]
+T[Content Moderation Service]
+end
+
+subgraph Data Layer
+U[(PostgreSQL)]
+V[(ScyllaDB)]
+W[(Redis)]
+X[Elasticsearch]
+Y[S3]
+end
+</code></pre>
+<p>{{&lt; /mermaid &gt;}}</p>
+<h3 id="infrastructure-components">Infrastructure Components</h3>
+<ol>
+<li>
+<p><strong>Global CDN</strong>: We use a Content Delivery Network to serve static assets and cached content globally, reducing latency for users worldwide.</p>
+</li>
+<li>
+<p><strong>Load Balancer</strong>: Distributes incoming traffic across multiple API Gateway instances for improved performance and fault tolerance.</p>
+</li>
+<li>
+<p><strong>API Gateway</strong>: Acts as the entry point for all client requests, handling authentication, rate limiting, and request routing.</p>
+</li>
+<li>
+<p><strong>Service Mesh</strong>: Implements inter-service communication, providing features like service discovery, load balancing, and encryption.</p>
+</li>
+<li>
+<p><strong>Kubernetes Cluster</strong>: Orchestrates our microservices, managing deployment, scaling, and failover of our applications.</p>
+</li>
+<li>
+<p><strong>Confluent Kafka</strong>: Serves as our central event streaming platform, enabling real-time data flow between services.</p>
+</li>
+<li>
+<p><strong>Data Layer</strong>: A mix of databases optimized for different use cases, including PostgreSQL, ScyllaDB, Redis, Elasticsearch, and S3.</p>
+</li>
+<li>
+<p><strong>Monitoring &amp; Logging</strong>: Centralized monitoring and logging solution for observability across the entire system.</p>
+</li>
+<li>
+<p><strong>CI/CD Pipeline</strong>: Automated pipeline for continuous integration and deployment of our microservices.</p>
+</li>
+<li>
+<p><strong>Identity Provider</strong>: External service for social login and identity management.</p>
+</li>
+</ol>
+<h2 id="core-services-and-their-interactions">Core Services and Their Interactions</h2>
+<h3 id="1-authentication-service">1. Authentication Service</h3>
+<p>The Authentication Service manages user authentication and authorization. It interacts with the external Identity Provider for social logins and maintains its own user credential database.</p>
+<p>{{&lt; mermaid &gt;}}
+sequenceDiagram
+participant C as Client
+participant AG as API Gateway
+participant AS as Auth Service
+participant IP as Identity Provider
+participant PS as PostgreSQL</p>
+<pre><code>C-&gt;&gt;AG: Login Request
+AG-&gt;&gt;AS: Forward Login Request
+alt Social Login
+    AS-&gt;&gt;IP: Validate Social Credentials
+    IP--&gt;&gt;AS: Social Credentials Valid
+else Regular Login
+    AS-&gt;&gt;PS: Validate Credentials
+    PS--&gt;&gt;AS: Credentials Valid
+end
+AS-&gt;&gt;AS: Generate JWT
+AS--&gt;&gt;AG: Return JWT
+AG--&gt;&gt;C: Login Successful (JWT)
+</code></pre>
+<p>{{&lt; /mermaid &gt;}}</p>
+<h3 id="2-user-service">2. User Service</h3>
+<p>The User Service manages user profiles and relationships. When a user updates their profile or follows another user:</p>
+<ol>
+<li>The User Service updates the data in PostgreSQL.</li>
+<li>It publishes a &ldquo;UserUpdated&rdquo; or &ldquo;UserFollowed&rdquo; event to Kafka.</li>
+<li>Other services (like Feed Service) consume these events and update their data accordingly.</li>
+</ol>
+<h3 id="3-post-service">3. Post Service</h3>
+<p>The Post Service handles the creation, retrieval, and management of user posts. Here&rsquo;s a detailed flow of post creation:</p>
+<p>{{&lt; mermaid &gt;}}
+sequenceDiagram
+participant C as Client
+participant AG as API Gateway
+participant PS as Post Service
+participant S3 as S3
+participant DB as ScyllaDB
+participant K as Confluent Kafka
+participant CMS as Content Moderation Service</p>
+<pre><code>C-&gt;&gt;AG: Create Post Request
+AG-&gt;&gt;PS: Forward Create Post Request
+PS-&gt;&gt;S3: Upload Media (if any)
+S3--&gt;&gt;PS: Media URL
+PS-&gt;&gt;DB: Store Post Data
+DB--&gt;&gt;PS: Confirmation
+PS-&gt;&gt;K: Publish PostCreated Event
+K--&gt;&gt;CMS: Consume PostCreated Event
+CMS-&gt;&gt;CMS: Analyze Content
+alt Content Approved
+    CMS-&gt;&gt;K: Publish ContentApproved Event
+else Content Flagged
+    CMS-&gt;&gt;K: Publish ContentFlagged Event
+end
+PS--&gt;&gt;AG: Post Created Response
+AG--&gt;&gt;C: Post Created Confirmation
+</code></pre>
+<p>{{&lt; /mermaid &gt;}}</p>
+<h3 id="4-feed-service">4. Feed Service</h3>
+<p>The Feed Service generates and manages user feeds. It&rsquo;s a critical component that needs to handle high read and write throughput. Here&rsquo;s how it works:</p>
+<ol>
+<li>Listens for &ldquo;PostCreated&rdquo; events from Kafka.</li>
+<li>For each event, it identifies the post creator&rsquo;s followers.</li>
+<li>Updates the feed entries for these followers in ScyllaDB.</li>
+<li>Caches the most recent feed items in Redis for quick access.</li>
+</ol>
+<p>When a user requests their feed:</p>
+<ol>
+<li>The Feed Service first checks Redis for cached feed items.</li>
+<li>For any missing items, it queries ScyllaDB.</li>
+<li>It then assembles the feed and returns it to the user.</li>
+<li>In parallel, it updates the Redis cache with the fetched items.</li>
+</ol>
+<h3 id="5-messaging-service">5. Messaging Service</h3>
+<p>The Messaging Service handles real-time communication between users. It uses WebSockets for real-time message delivery and ScyllaDB for message persistence.</p>
+<p>{{&lt; mermaid &gt;}}
+sequenceDiagram
+participant C1 as Client 1
+participant C2 as Client 2
+participant AG as API Gateway
+participant MS as Messaging Service
+participant DB as ScyllaDB
+participant R as Redis</p>
+<pre><code>C1-&gt;&gt;AG: Send Message
+AG-&gt;&gt;MS: Forward Message
+MS-&gt;&gt;DB: Store Message
+MS-&gt;&gt;R: Update Conversation Cache
+MS--&gt;&gt;C2: Deliver Message (WebSocket)
+MS--&gt;&gt;AG: Message Sent Confirmation
+AG--&gt;&gt;C1: Message Delivered
+</code></pre>
+<p>{{&lt; /mermaid &gt;}}</p>
+<h3 id="6-notification-service">6. Notification Service</h3>
+<p>The Notification Service manages and delivers user notifications. It:</p>
+<ol>
+<li>Listens for various events from Kafka (new followers, mentions, likes, etc.)</li>
+<li>Processes these events and generates notifications.</li>
+<li>Stores notifications in Redis for quick access.</li>
+<li>Delivers real-time notifications via WebSockets.</li>
+<li>Periodically moves older notifications to ScyllaDB for long-term storage.</li>
+</ol>
+<h3 id="7-search-service">7. Search Service</h3>
+<p>The Search Service provides platform-wide search capabilities using Elasticsearch. It:</p>
+<ol>
+<li>Maintains an Elasticsearch index of users, posts, and hashtags.</li>
+<li>Listens for update events from Kafka to keep the search index current.</li>
+<li>Provides full-text search with relevance scoring.</li>
+</ol>
+<p>To handle high query loads, the Search Service is horizontally scaled, with multiple instances behind a load balancer.</p>
+<h3 id="8-analytics-service">8. Analytics Service</h3>
+<p>The Analytics Service processes user behavior data for insights. It leverages Kafka Streams for real-time data processing:</p>
+<ol>
+<li>Consumes events from Kafka (page views, clicks, etc.)</li>
+<li>Processes data in real-time using Kafka Streams.</li>
+<li>Stores aggregated data in ScyllaDB for fast retrieval.</li>
+<li>Periodically moves historical data to S3 for long-term storage and batch processing.</li>
+</ol>
+<h3 id="9-content-moderation-service">9. Content Moderation Service</h3>
+<p>The Content Moderation Service ensures platform safety. Here&rsquo;s its workflow:</p>
+<ol>
+<li>Listens for new post and comment events from Kafka.</li>
+<li>Applies machine learning models for content classification.</li>
+<li>For borderline cases, enqueues content for human review.</li>
+<li>Publishes moderation decisions back to Kafka.</li>
+<li>Other services (like Post Service) react to these decisions, potentially hiding or removing content.</li>
+</ol>
+<h2 id="data-flow-and-consistency">Data Flow and Consistency</h2>
+<p>Our platform employs a mix of consistency models based on the requirements of each service. Here&rsquo;s a deeper look at how data flows through the system:</p>
+<h3 id="write-path">Write Path</h3>
+<p>When a user creates a post:</p>
+<ol>
+<li>The Post Service receives the request through the API Gateway.</li>
+<li>It validates the request and user permissions.</li>
+<li>If the post includes media, it&rsquo;s uploaded to S3.</li>
+<li>The post data is stored in ScyllaDB.</li>
+<li>A &ldquo;PostCreated&rdquo; event is published to Confluent Kafka.</li>
+<li>Multiple services consume this event:
+<ul>
+<li>Feed Service updates follower feeds.</li>
+<li>Search Service indexes the new post.</li>
+<li>Analytics Service processes the event for metrics.</li>
+<li>Content Moderation Service analyzes the post.</li>
+</ul>
+</li>
+</ol>
+<p>This event-driven approach allows for eventual consistency across services while maintaining high write throughput.</p>
+<h3 id="read-path">Read Path</h3>
+<p>When a user requests their feed:</p>
+<ol>
+<li>The request goes through the API Gateway to the Feed Service.</li>
+<li>The Feed Service first checks Redis for cached feed items.</li>
+<li>For any missing items, it queries ScyllaDB.</li>
+<li>As items are fetched from ScyllaDB, they&rsquo;re asynchronously cached in Redis.</li>
+<li>The service assembles the feed and returns it to the user.</li>
+<li>In parallel, it prefetches the next batch of feed items, caching them in Redis for faster subsequent requests.</li>
+</ol>
+<p>This multi-tiered caching strategy balances between data freshness and read performance.</p>
+<h2 id="scaling-and-performance-considerations">Scaling and Performance Considerations</h2>
+<ol>
+<li>
+<p><strong>Kubernetes Autoscaling</strong>: We use Horizontal Pod Autoscaler (HPA) to automatically scale our services based on CPU utilization and custom metrics (like request rate).</p>
+</li>
+<li>
+<p><strong>Database Scaling</strong>:</p>
+<ul>
+<li>ScyllaDB is scaled horizontally across multiple nodes for high throughput.</li>
+<li>PostgreSQL uses read replicas for scaling read operations.</li>
+<li>Redis is set up in a cluster mode for distributed caching.</li>
+</ul>
+</li>
+<li>
+<p><strong>Kafka Scaling</strong>: We use Kafka&rsquo;s partition feature to parallelize event processing and scale consumers.</p>
+</li>
+<li>
+<p><strong>CDN and Edge Caching</strong>: Static content and API responses for public data are cached at the edge to reduce latency and backend load.</p>
+</li>
+<li>
+<p><strong>Elasticsearch Scaling</strong>: The Elasticsearch cluster is scaled horizontally, with data sharded across multiple nodes for faster search operations.</p>
+</li>
+</ol>
+<h2 id="handling-edge-cases">Handling Edge Cases</h2>
+<ol>
+<li>
+<p><strong>Network Partitions</strong>: In the event of a network partition:</p>
+<ul>
+<li>Kubernetes reschedules pods to healthy nodes.</li>
+<li>Kafka&rsquo;s replication ensures no loss of events.</li>
+<li>ScyllaDB&rsquo;s multi-data center setup allows for continued operations.</li>
+</ul>
+</li>
+<li>
+<p><strong>Data Consistency</strong>: While we use eventual consistency for performance in many cases, we ensure that critical operations (like financial transactions or privacy settings changes) use strong consistency through PostgreSQL.</p>
+</li>
+<li>
+<p><strong>Service Failures</strong>:</p>
+<ul>
+<li>Kubernetes automatically restarts failed pods.</li>
+<li>Circuit breakers prevent cascading failures.</li>
+<li>The event-driven architecture allows services to catch up on missed events when they come back online.</li>
+</ul>
+</li>
+<li>
+<p><strong>Data Migrations</strong>: For large-scale data migrations or schema changes, we employ a dual-write strategy, writing to both old and new schemas during the transition period to ensure smooth upgrades.</p>
+</li>
+</ol>
+<h2 id="security-considerations">Security Considerations</h2>
+<ol>
+<li>
+<p><strong>Authentication and Authorization</strong>:</p>
+<ul>
+<li>JWT tokens for authentication, with short expiration times and refresh token rotation.</li>
+<li>OAuth2 for third-party integrations.</li>
+<li>Role-Based Access Control (RBAC) for fine-grained permissions.</li>
+</ul>
+</li>
+<li>
+<p><strong>Data Encryption</strong>:</p>
+<ul>
+<li>All data encrypted at rest and in transit.</li>
+<li>Sensitive data in databases additionally encrypted at the application level.</li>
+</ul>
+</li>
+<li>
+<p><strong>Network Security</strong>:</p>
+<ul>
+<li>Virtual Private Cloud (VPC) for network isolation.</li>
+<li>Web Application Firewall (WAF) for protecting against common web exploits.</li>
+<li>DDoS protection at the CDN and load balancer level.</li>
+</ul>
+</li>
+<li>
+<p><strong>Compliance</strong>:</p>
+<ul>
+<li>GDPR compliance with features for data portability and the right to be forgotten.</li>
+<li>Regular security audits and penetration testing.</li>
+</ul>
+</li>
+<li>
+<p><strong>Content Security</strong>:</p>
+<ul>
+<li>Automated content moderation with machine learning models.</li>
+<li>Human review process for borderline cases.</li>
+<li>User reporting features for community-driven moderation.</li>
+</ul>
+</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>Our social media platform architecture leverages a microservices approach, event-driven design, and a thoughtful mix of data storage solutions to create a scalable, performant, and resilient system. By focusing on service interactions, data flow, and robust infrastructure, we&rsquo;ve created an architecture that can evolve with changing requirements and scale to meet the demands of millions of users.</p>
+<p>Key takeaways:</p>
+<ol>
+<li>Microservices architecture allows for independent scaling and development of components.</li>
+<li>Event-driven design with Confluent Kafka enables real-time updates and decoupled services.</li>
+<li>A mix of databases (ScyllaDB, PostgreSQL, Redis, Elasticsearch) allows us to optimize for different data access patterns.</li>
+<li>Caching and eventual consistency are used strategically to balance performance and data integrity.</li>
+<li>Kubernetes provides a flexible and scalable foundation for our infrastructure.</li>
+<li>Security and compliance are baked into the architecture at multiple levels.</li>
+</ol>
+<p>Remember that system design is an iterative process. Continuously monitor, evaluate, and refine the architecture as the platform grows and evolves. Stay open to new technologies and practices that can further optimize your architecture.</p>
+
+        </div>
+
+        <footer class="mt-12 pt-8 border-t border-gray-800">
+            
+
+            <div class="flex justify-between items-center">
+                
+                
+                <a href="http://localhost:1313/posts/kubernetes-metrics-autoscaling/" class="text-violet-400 hover:text-white transition duration-300">
+                    Next: Custom Cluster Metrics Autoscaling in Amazon EKS &rarr;
+                </a>
+                
+            </div>
+        </footer>
+    </div>
+</article>
+
+    </main>
+    <footer class="bg-gray-900 text-gray-300 py-8">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap justify-between items-center">
+            <div class="w-full md:w-1/3 mb-6 md:mb-0">
+                <h3 class="text-xl font-bold mb-2">Nebula Builders</h3>
+                <p class="text-sm">Nebula Builders is an elite team of software engineers delivering cutting-edge insights and expert consulting in Cloud Computing, Software Architecture, and Design. We empower businesses to harness the full potential of cloud technologies, crafting robust, scalable solutions that drive innovation and operational excellence.</p>
+            </div>
+            <div class="w-full md:w-1/3 mb-6 md:mb-0">
+                <h4 class="text-lg font-semibold mb-2">Quick Links</h4>
+                <ul>
+                    
+                    <li><a href="/" class="hover:text-violet-400 transition duration-300">Home</a></li>
+                    
+                    <li><a href="/posts" class="hover:text-violet-400 transition duration-300">Blog</a></li>
+                    
+                    <li><a href="/about" class="hover:text-violet-400 transition duration-300">About</a></li>
+                    
+                </ul>
+            </div>
+            <div class="w-full md:w-1/3">
+                <h4 class="text-lg font-semibold mb-2">Connect</h4>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-violet-400 transition duration-300">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-violet-400 transition duration-300">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-violet-400 transition duration-300">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="mt-8 text-center text-sm">
+            <p>&copy; 2024 Nebula Builders. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+    <button id="scroll-to-top" class="fixed bottom-4 right-4 bg-primary text-white p-2 rounded-full shadow-lg hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+</body>
+</html>

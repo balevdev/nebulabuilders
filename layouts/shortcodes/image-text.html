@@ -1,0 +1,12 @@
+{{ $image := .Get "image" }}
+{{ $alt := .Get "alt" }}
+{{ $position := .Get "position" | default "left" }}
+
+<div class="flex flex-col {{ if eq $position "right" }}md:flex-row-reverse{{ else }}md:flex-row{{ end }} items-center my-8">
+    <div class="w-full md:w-1/2 mb-4 md:mb-0 {{ if eq $position "right" }}md:ml-8{{ else }}md:mr-8{{ end }}">
+        <img src="{{ $image }}" alt="{{ $alt }}" class="rounded-lg shadow-md">
+    </div>
+    <div class="w-full md:w-1/2">
+        {{ .Inner | markdownify }}
+    </div>
+</div>
