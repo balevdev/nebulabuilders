@@ -15,7 +15,7 @@
 
             {{ $allPosts := where .Site.RegularPages "Type" "posts" }}
             
-            <div class="{{ if .IsHome }}grid gap-8 md:grid-cols-2 lg:grid-cols-3{{ else }}space-y-3{{ end }}">
+            <div class="{{ if .IsHome }}grid gap-8 md:grid-cols-2 lg:grid-cols-3{{ else }}space-y-4{{ end }}">
                 {{ if .IsHome }}
                     {{ range first 3 $allPosts }}
                         {{ partial "post-card-home.html" . }}

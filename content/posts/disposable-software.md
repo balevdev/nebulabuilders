@@ -6,6 +6,7 @@ tags: ["Domain Driven Design", "Hexagonal Architecture", "Software Development",
 categories: ["Software Architecture"]
 author: "Boyan Balev"
 description: "Explore the concept of 'disposable software' using Hexagonal Architecture and Domain-Driven Design principles in Go to create flexible and maintainable codebases."
+image: "/images/nebula.png"
 ---
 
 The article delves into the concept of "disposable software" — not in the sense of throwaway code, but rather in creating systems that are so flexible and well-structured that any part can be easily replaced or updated without disrupting the whole. We'll explore how combining Hexagonal Architecture with Domain-Driven Design (DDD) principles, particularly in the Go programming language, can lead to more maintainable and adaptable codebases.

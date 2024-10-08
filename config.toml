@@ -3,7 +3,7 @@ languageCode = "en-us"
 title = "Nebula Builders"
 
 [params]
-  description ="Nebula Builders is an elite team of software engineers delivering cutting-edge insights and expert consulting in Cloud Computing, Software Architecture, and Design. We empower businesses to harness the full potential of cloud technologies, crafting robust, scalable solutions that drive innovation and operational excellence."
+  description ="Nebula Builders is an elite team of software experts. We are dedicated to delivering insights and content in the vast space of software. Hence the name nebula. "
   author = "Boyan Balev"
   mermaid = true 
 

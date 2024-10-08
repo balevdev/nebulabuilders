@@ -2,6 +2,7 @@
 title: "Comprehensive Social Media Platform Architecture: Microservices, Data Flow, and Infrastructure (Version 1)"
 date: 2023-09-11T12:00:00-00:00
 mermaid: true
+image: "/images/nebula.png"
 ---
 
 ## Introduction

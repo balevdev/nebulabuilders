@@ -4,6 +4,7 @@ date: 2023-09-12T15:30:00Z
 draft: false
 tags: ["Kubernetes", "EKS", "Autoscaling", "AWS", "DevOps", "Cloud Native"]
 categories: ["Cloud Computing", "Kubernetes", "Advanced Deployment Strategies"]
+image: "/images/nebula.png"
 ---
 
 # Mastering Custom Cluster Metrics Autoscaling in Amazon EKS: A Comprehensive Guide

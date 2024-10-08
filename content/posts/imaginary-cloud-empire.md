@@ -4,6 +4,7 @@ date: 2024-03-10T09:00:00Z
 draft: false
 tags: ["Cloud Computing", "Kubernetes", "Bare Metal", "Infrastructure"]
 categories: ["Technology"]
+image: "/images/nebula.png"
 ---
 
 ## Vision: Redefining Cloud Computing with Bare Metal Performance and Cloud Flexibility

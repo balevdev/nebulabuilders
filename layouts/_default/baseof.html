@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
     {{ template "_internal/opengraph.html" . }}
     {{ template "_internal/twitter_cards.html" . }}
-    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
     {{ $js := resources.Get "js/main.js" }}
     {{ if $js }}
       {{ $js = $js | js.Build "main.js" | minify | fingerprint }}
