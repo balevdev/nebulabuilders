@@ -15,8 +15,10 @@ We'll explore the rationale behind our technical decisions, diving deep into the
 
 At its core, our social media platform is built on a microservices architecture, leveraging Kubernetes as the orchestration platform. This approach allows for independent scaling and deployment of services, improving overall system resilience and development velocity.
 
-{{</* mermaid */>}}
-graph TD
+
+{{< mermaid >}}
+%%{init: {'theme': 'dark', 'flowchart': { 'nodeSpacing': 15, 'rankSpacing': 40, 'curve': 'basis' }}}%%
+flowchart TD
     A[Client Applications] --> B[Global CDN]
     B --> C[Load Balancer]
     C --> D[API Gateway]
@@ -27,28 +29,25 @@ graph TD
     I[Monitoring & Logging] --> F
     J[CI/CD Pipeline] --> F
     K[Identity Provider] --> D
-    
-    subgraph Microservices Cluster
-    L[Authentication Service]
-    M[User Service]
-    N[Post Service]
-    O[Feed Service]
-    P[Messaging Service]
-    Q[Notification Service]
-    R[Search Service]
-    S[Analytics Service]
-    T[Content Moderation Service]
-    end
-    
-    subgraph Data Layer
-    U[(PostgreSQL)]
-    V[(ScyllaDB)]
-    W[(Redis)]
-    X[Elasticsearch]
-    Y[S3]
-    end
-{{</* /mermaid */>}}
 
+    subgraph MC[Microservices Cluster]
+        L[Auth] & M[User] & N[Post] & O[Feed]
+        P[Messaging] & Q[Notification] & R[Search]
+        S[Analytics] & T[Content Moderation]
+    end
+
+    subgraph DL[Data Layer]
+        U[(PostgreSQL)] & V[(ScyllaDB)] & W[(Redis)]
+        X[Elasticsearch] & Y[S3]
+    end
+
+    F --> MC
+    G --> DL
+
+    classDef default fill:#2A2A2A,stroke:#7A7A7A,stroke-width:2px;
+    classDef cluster fill:#3A3A3A,stroke:#9A9A9A,stroke-width:2px;
+    class MC,DL cluster;
+{{< /mermaid >}}
 ### Infrastructure Components
 
 1. **Global CDN**: We use a Content Delivery Network to serve static assets and cached content globally, reducing latency for users worldwide.
@@ -76,8 +75,8 @@ graph TD
 ### 1. Authentication Service
 
 The Authentication Service manages user authentication and authorization. It interacts with the external Identity Provider for social logins and maintains its own user credential database.
-
-{{</* mermaid */>}}
+{{< mermaid >}}
+%%{init: {'theme': 'dark', 'sequence': { 'mirrorActors': false, 'bottomMarginAdj': 5, 'actorMargin': 50, 'boxMargin': 10 }}}%%
 sequenceDiagram
     participant C as Client
     participant AG as API Gateway
@@ -97,7 +96,7 @@ sequenceDiagram
     AS->>AS: Generate JWT
     AS-->>AG: Return JWT
     AG-->>C: Login Successful (JWT)
-{{</* /mermaid */>}}
+{{< /mermaid >}}
 
 ### 2. User Service
 
@@ -111,7 +110,8 @@ The User Service manages user profiles and relationships. When a user updates th
 
 The Post Service handles the creation, retrieval, and management of user posts. Here's a detailed flow of post creation:
 
-{{</* mermaid */>}}
+{{< mermaid >}}
+%%{init: {'theme': 'dark', 'sequence': { 'mirrorActors': false, 'bottomMarginAdj': 5, 'actorMargin': 50, 'boxMargin': 10 }}}%%
 sequenceDiagram
     participant C as Client
     participant AG as API Gateway
@@ -137,7 +137,7 @@ sequenceDiagram
     end
     PS-->>AG: Post Created Response
     AG-->>C: Post Created Confirmation
-{{</* /mermaid */>}}
+{{< /mermaid >}}
 
 ### 4. Feed Service
 
@@ -159,7 +159,9 @@ When a user requests their feed:
 
 The Messaging Service handles real-time communication between users. It uses WebSockets for real-time message delivery and ScyllaDB for message persistence.
 
-{{</* mermaid */>}}
+
+{{< mermaid >}}
+%%{init: {'theme': 'dark', 'sequence': { 'mirrorActors': false, 'bottomMarginAdj': 5, 'actorMargin': 50, 'boxMargin': 10 }}}%%
 sequenceDiagram
     participant C1 as Client 1
     participant C2 as Client 2
@@ -175,8 +177,7 @@ sequenceDiagram
     MS-->>C2: Deliver Message (WebSocket)
     MS-->>AG: Message Sent Confirmation
     AG-->>C1: Message Delivered
-{{</* /mermaid */>}}
-
+{{< /mermaid >}}
 ### 6. Notification Service
 
 The Notification Service manages and delivers user notifications. It:

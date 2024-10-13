@@ -135,6 +135,7 @@
       "md:text-6xl",
       "md:w-1/3",
       "md:w-2/3",
+      "mermaid",
       "min-h-screen",
       "ml-1",
       "mt-12",

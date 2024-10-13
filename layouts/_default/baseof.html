@@ -18,7 +18,13 @@
     {{ if .Params.mermaid }}
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>
-      mermaid.initialize({ startOnLoad: true });
+        document.addEventListener('DOMContentLoaded', (event) => {
+            mermaid.initialize({ 
+              startOnLoad: true,
+              theme: 'dark',
+              securityLevel: 'loose'
+            });
+          });
     </script>
     {{ end }}
 </head>
