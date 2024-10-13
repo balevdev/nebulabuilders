@@ -10,7 +10,7 @@
         "type-check": "tsc --noEmit",
         "lint": "eslint 'src/**/*.{js,ts}'",
         "format": "prettier --write 'src/**/*.{js,ts,css,md,json}'"
-      },
+    },
     "dependencies": {
         "@types/node": "^22.5.4",
         "fuse.js": "^7.0.0",

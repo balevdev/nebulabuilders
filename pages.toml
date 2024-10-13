@@ -1,9 +1,9 @@
 [build]
-command = "npm run build"
+command = "bun run build"
 publish = "public"
 
 [build.environment]
-NODE_VERSION = "20"
+BUN_VERSION = "latest"
 HUGO_VERSION = "0.134.1"
 
 [[redirects]]

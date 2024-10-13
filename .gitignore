@@ -1,73 +1,31 @@
-# Hugo default output directory
-/public
-/public/assets
-# Hugo cache directory
-/resources/_gen
+# Bun
+bun.lockb
 
-# Executable may be added to repository
-hugo.exe
-hugo.darwin
-hugo.linux
+# Hugo
+/public/
+/resources/_gen/
+/assets/jsconfig.json
+hugo_stats.json
 
-# Temporary lock file while building
-/.hugo_build.lock
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Node modules (if you're using npm for frontend assets)
+# Node
 node_modules/
 
-# Log files
+# Vite
+/dist/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
 # Editor directories and files
 .idea
-.vscode
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-
-# Compiled Object files, Static and Dynamic libs (Shared Objects)
-*.o
-*.a
-*.so
-
-# Folders
-_obj
-_test
-
-# Architecture specific extensions/prefixes
-*.[568vq]
-[568vq].out
-
-*.cgo1.go
-*.cgo2.c
-_cgo_defun.c
-_cgo_gotypes.go
-_cgo_export.*
-
-_testmain.go
-
-# Output of the go coverage tool, specifically when used with LiteIDE
-*.out
-
-
-
-# Environment files
-.env
-.env.*
-
-# Backup files
-*.bak
-*.tmp
