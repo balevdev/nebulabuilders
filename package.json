@@ -4,14 +4,15 @@
     "type": "module",
     "description": "A static blog built with Hugo, HTMX, Tailwind CSS, and TypeScript",
     "scripts": {
-        "dev": "concurrently \"hugo server --disableFastRender --poll 700ms\" \"vite\"",
-        "build": "hugo --gc --minify && vite build",
+        "dev": "concurrently \"hugo server --disableFastRender --poll 700ms\" \"bun run vite\"",
+        "build": "hugo --gc --minify && bun run vite build",
         "preview": "hugo server --disableFastRender",
-        "type-check": "tsc --noEmit",
-        "lint": "eslint 'src/**/*.{js,ts}'",
-        "format": "prettier --write 'src/**/*.{js,ts,css,md,json}'",
-        "analyze": "vite build --mode analyze",
-        "optimize-images": "imagemin 'static/images/**/*' --out-dir='static/images/optimized'"
+        "type-check": "bun run tsc --noEmit",
+        "lint": "bun run eslint 'src/**/*.{js,ts}'",
+        "format": "bun run prettier --write 'src/**/*.{js,ts,css,md,json}'",
+        "analyze": "bun run vite build --mode analyze",
+        "optimize-images": "bun run imagemin 'static/images/**/*' --out-dir='static/images/optimized'",
+        "postinstall": "bun run husky install"
     },
     "dependencies": {
         "fuse.js": "^7.0.0",
@@ -37,11 +38,6 @@
         "typescript": "^5.5.4",
         "vite": "^5.4.3",
         "vite-plugin-compression": "^0.5.1"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
     },
     "lint-staged": {
         "*.{js,ts}": [
