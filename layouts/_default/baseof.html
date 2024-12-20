@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
     <meta name="description" content="{{ if .IsHome }}{{ .Site.Params.description }}{{ else }}{{ .Summary }}{{ end }}">
     {{ $style := resources.Get "css/main.css" | postCSS | minify | fingerprint }}
@@ -28,9 +29,9 @@
     </script>
     {{ end }}
 </head>
-<body class="bg-gray-950 text-gray-200 min-h-screen flex flex-col">
+<body class="bg-gray-900 text-gray-200 min-h-screen flex flex-col">
     {{ partial "header.html" . }}
-    <main class="flex-grow">
+    <main class="flex-grow">   
         {{ block "main" . }}{{ end }}
     </main>
     {{ partial "footer.html" . }}

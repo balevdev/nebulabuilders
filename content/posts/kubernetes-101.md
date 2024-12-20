@@ -4,7 +4,7 @@ date: 2024-03-11T10:00:00Z
 draft: false
 tags: ["Kubernetes", "Container Orchestration", "DevOps", "Cloud Native"]
 categories: ["Technology", "Cloud Computing"]
-image: "/images/nebula.png"
+image: "/images/Kubernetes.webp"
 ---
 
 Kubernetes solves several critical problems in modern software development, particularly in managing containerized applications. As applications grow in complexity, managing these containers manually becomes untenable. Kubernetes offers a solution by providing automated orchestration, ensuring applications run efficiently and reliably across clusters of servers.

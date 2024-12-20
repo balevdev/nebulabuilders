@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-gray-950 text-gray-200;
+    @apply bg-gray-900 text-gray-200;
   }
 }
 
@@ -18,7 +18,7 @@
 
 @layer utilities {
   .prose-invert {
-    @apply prose-headings:text-white prose-a:text-violet-400 prose-strong:text-white prose-code:text-violet-300 prose-pre:bg-gray-800;
+    @apply prose-headings:text-white prose-a:text-violet-500 prose-strong:text-white prose-code:text-violet-300 prose-pre:bg-gray-800;
   }
 }
 
@@ -75,4 +75,9 @@
 
 .team-member-card:hover .social-icons {
     opacity: 1;
+}
+.gradient-heading {
+  background: linear-gradient(to right, #8B5CF6, #6D28D9);
+  -webkit-background-clip: text;
+  color: transparent;
 }

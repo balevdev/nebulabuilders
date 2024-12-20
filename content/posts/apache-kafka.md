@@ -4,7 +4,7 @@ date: 2024-03-12T09:00:00Z
 draft: false
 tags: ["Apache Kafka", "Distributed Systems", "Data Streaming", "Software Architecture"]
 categories: ["Technology", "Big Data"]
-image: "/images/nebula.png"
+image: "/images/Kafka.webp"
 ---
 
 ## Why Kafka?
