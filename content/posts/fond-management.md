@@ -11,7 +11,7 @@ image: "/images/bearsfond.webp"
 
 ## Introduction
 
-In today's high-frequency trading environment, the architecture of a trading system can mean the difference between profit and loss. This article examines the architecture of a sophisticated algorithmic trading system, breaking down its components and explaining how they work together to execute trading strategies efficiently and safely.
+In today's high-frequency trading environment, the architecture of a trading system can` mean the difference between profit and loss. This article examines the architecture of a sophisticated algorithmic trading system, breaking down its components and explaining how they work together to execute trading strategies efficiently and safely.
 
 ## System Overview
 
@@ -320,7 +320,6 @@ The success of such a system depends not just on its components, but on their ca
                +-------------------------+
 ```
 
-This ASCII diagram provides a detailed representation of the complete trading system architecture, showing:
 
 1. Data Processing Layer
    - Raw data inputs
@@ -357,9 +356,6 @@ This ASCII diagram provides a detailed representation of the complete trading sy
    - Order management
    - Trade journaling
 
-The diagram shows both the hierarchical structure and the interconnections between different components, representing data flow and decision paths throughout the system.
-
-This architecture diagram shows the high-level flow of data and decisions through the system, from raw data ingestion to trade execution.
 
 ## Implementation Considerations
 
