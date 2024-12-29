@@ -9,7 +9,7 @@
         </header>
 
         {{ if .Params.image }}
-        <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-64 object-cover rounded-lg mb-8" loading="lazy">
+        <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-auto object-contain rounded-lg mb-8" loading="lazy">
         {{ end }}
 
         <div class="prose prose-lg prose-invert max-w-none">
